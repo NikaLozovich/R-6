@@ -1,8 +1,18 @@
-const { src, dest } = require('gulp');
+const { src, dest, parallel } = require('gulp');
 
 const copyScss = () => {
     return src('dist/sass/*.scss')
-        .pipe(dest('build/css'));
+        .pipe(dest('build/css/'));
 };
 
-exports.copy = copyScss;
+const copyHtml = () => {
+    return src('dist/*.html')
+        .pipe(dest('build/'));
+};
+
+const copyImages = () => {
+    return src('dist/images/*.png')
+        .pipe(dest('build/images'));
+};
+
+exports.copyAll = parallel(copyScss, copyHtml, copyImages);
